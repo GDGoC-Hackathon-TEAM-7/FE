@@ -1,5 +1,13 @@
-# FE
-GDGoC 2025 백야 해커톤 &lt;TEAM 7 - (front)>
+# DodamDodam - FE
+GDGoC 2025 백야 해커톤 &lt;TEAM 7 - Front/Mobile&gt;
+
+> <h3>Flutter Project Info</h3>
+|  Project Name  |  dodam  |
+|----------------|---------|
+|  Project Type  |  Application  |  
+|  Organization  |  io.luckyvicky  |   
+|  Android Language  |  Java  |
+|  Platforms  |  Android / iOS / Web / Windows  |
 
 <br>
 
