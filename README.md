@@ -9,7 +9,15 @@ GDGoC 2025 백야 해커톤 &lt;TEAM 7 - Front/Mobile&gt;
 |  Android Language  |  Java  |
 |  Platforms  |  Android / iOS / Web / Windows  |
 
-<br>
+
+> <h3>Screen</h3>
+|      name      |  routing  |    detail    |
+|----------------|-----------|--------------|
+|  SplashScreen  |  /        | app 스플래시 화면 |
+|  LoginScreen   |  /login   | 로그인 모드 선택 |
+|  SignupScreen  |  /signup  | 회원가입 |
+|  SigninScreen  |  /signin  | 기존 사용자 로그인 |
+
 
 > <h3>Version Info</h3>
 ```
@@ -24,8 +32,7 @@ Tools • Dart 3.5.2 • DevTools 2.37.2
 ```
 
 
-
-## flutter project - Getting Started
+> <h3>flutter project - Getting Started</h3>
 
 This project is a starting point for a Flutter application.
 
