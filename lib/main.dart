@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'login.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -16,8 +18,9 @@ class MyApp extends StatelessWidget {
 
       routes: {
         '/': (context) => SplashScreen(title: '도담도담'),
-        // '/home': (context) => HomeScreen(),
-        // '/detail': (context) => DetailScreen(),
+        '/login': (context) => LoginScreen(),
+        '/signup': (context) => SignupScreen(),
+        '/signin': (context) => SigninScreen(),
       },
 
       theme: ThemeData(
@@ -37,7 +40,7 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: 3), () {
       if (context.mounted) {
-        Navigator.of(context).pushReplacementNamed('/home');
+        Navigator.of(context).pushReplacementNamed('/login');
       }
     });
 
