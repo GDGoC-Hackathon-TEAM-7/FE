@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+import 'constants.dart';
+
 
 class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({Key? key}) : super(key: key);
@@ -14,11 +19,38 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   void _addRecord(String category) {
     setState(() {
       _timeline.add({
-        'time': TimeOfDay.now().format(context), // 현재 시간 추가
+        'time': TimeOfDay.now().format(context),
         'category': category,
       });
     });
   }
+
+  Future<void> _postRecord(String category) async {
+    final String apiUrl = 'http://$serverUrl/diary-records';
+    final Map<String, dynamic> requestBody = {
+      // 'babyId': firstBaby,
+      'diaryId': firstDiary,
+      // 'date': DateTime.now().toIso8601String().substring(0, 10),
+      'category': category,
+      // 'time': TimeOfDay.now().format(context),
+    };
+  
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(requestBody),
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      setState(() {
+        _timeline.add({
+          'time': requestBody['time'],
+          'category': category,
+        });
+      });
+    }
+  }
+
 
   void _showFullScreenDialog(String title) {
     showModalBottomSheet(
@@ -170,6 +202,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                           width: 50, height: 50),
                       onPressed: () {
                         _addRecord('식사');
+                        _postRecord('식사');
                       },
                     ),
                     const Text(
@@ -185,6 +218,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                           width: 50, height: 50),
                       onPressed: () {
                         _addRecord('기저귀');
+                        _postRecord('기저귀');
                       },
                     ),
                     const Text(
@@ -200,6 +234,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                           width: 50, height: 50),
                       onPressed: () {
                         _addRecord('취침');
+                        _postRecord('취침');
                       },
                     ),
                     const Text(
@@ -215,6 +250,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                           width: 50, height: 50),
                       onPressed: () {
                         _addRecord('기상');
+                        _postRecord('기상');
                       },
                     ),
                     const Text(
@@ -295,7 +331,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
           if (index == 0) {
             Navigator.pushNamed(context, '/ai_recommend'); // AI 추천 페이지
           } else if (index == 1) {
-            Navigator.pushNamed(context, '/schedule'); // 아이 일정 관리 페이지
+            Navigator.pushNamed(context, '/home'); // 아이 일정 관리 페이지
           } else if (index == 2) {
             Navigator.pushNamed(context, '/pediatrics'); // 근처 소아과 찾기 페이지
           }
