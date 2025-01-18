@@ -11,6 +11,19 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   final List<Map<String, String>> _timeline = []; // 타임라인 데이터 저장
   int _currentIndex = 1; // 하단 네비게이션 현재 선택된 인덱스
 
+  void _navigateToPage(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+
+    // 네비게이션 처리
+    if (index == 0) {
+      Navigator.pushNamed(context, '/ai'); // AI 추천 페이지
+    } else if (index == 2) {
+      Navigator.pushNamed(context, '/pediatrics'); // 근처 소아과 페이지
+    }
+  }
+
   void _addRecord(String category) {
     setState(() {
       _timeline.add({
@@ -288,18 +301,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-          if (index == 0) {
-            Navigator.pushNamed(context, '/ai_recommend'); // AI 추천 페이지
-          } else if (index == 1) {
-            Navigator.pushNamed(context, '/schedule'); // 아이 일정 관리 페이지
-          } else if (index == 2) {
-            Navigator.pushNamed(context, '/pediatrics'); // 근처 소아과 찾기 페이지
-          }
-        },
+        onTap: _navigateToPage, // 탭 이벤트 연결
         backgroundColor: const Color(0xFFDABF9C),
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.grey[600],

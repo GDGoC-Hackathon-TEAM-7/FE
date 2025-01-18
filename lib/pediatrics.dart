@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class PediatricsPage extends StatelessWidget {
-  const PediatricsPage({Key? key}) : super(key: key);
+class PediatricsScreen extends StatelessWidget {
+  const PediatricsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,13 +48,28 @@ class PediatricsPage extends StatelessWidget {
                   height: 200,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Colors.grey[300],
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const Center(
-                    child: Text(
-                      '지도 표시 (예: Google Maps)',
-                      style: TextStyle(color: Colors.grey),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: GoogleMap(
+                      initialCameraPosition: const CameraPosition(
+                        target: LatLng(37.5639, 127.0364), // 성동구 좌표
+                        zoom: 14.0,
+                      ),
+                      mapType: MapType.normal,
+                      markers: {
+                        Marker(
+                          markerId: const MarkerId('hospital1'),
+                          position: const LatLng(37.5645, 127.0383), // 예시 병원 위치
+                          infoWindow: const InfoWindow(title: '도담 소아과'),
+                        ),
+                        Marker(
+                          markerId: const MarkerId('hospital2'),
+                          position: const LatLng(37.5622, 127.0347), // 예시 병원 위치
+                          infoWindow: const InfoWindow(title: '사랑 소아과'),
+                        ),
+                      },
                     ),
                   ),
                 ),
