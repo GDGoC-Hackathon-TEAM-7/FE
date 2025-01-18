@@ -137,7 +137,19 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.transparent,
+      appBar: AppBar(
+        // title: Text('회원가입'),
+        leading: IconButton(
+          icon: Icon(
+            backIcon,
+            color: mainThemeColor,
+          ),
+          onPressed: () {
+            Navigator.of(context).pushReplacementNamed('/login');
+          },
+        ),
+      ),
       body: SafeArea(
         child: Center(
           child: Column(
@@ -270,22 +282,176 @@ class _SignupScreenState extends State<SignupScreen> {
 }
 
 
-class SigninScreen extends StatelessWidget {
+class SigninScreen extends StatefulWidget {
+  const SigninScreen({super.key});
+
+  @override
+  _SigninScreenState createState() => _SigninScreenState();
+}
+
+class _SigninScreenState extends State<SigninScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  bool _isLoading = false;
+
+  Future<void> _submitForm() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      // extract information
+      final email = _emailController.text;
+      final password = _passwordController.text;
+
+      // request
+      final response = await http.get(
+        Uri.parse('$serverUrl/user/signin?email=$email&password=$password'),
+      );
+
+      setState(() {
+        _isLoading = false;
+      });
+
+      // response
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("로그인 성공!")),
+        );
+        Navigator.of(context).pushReplacementNamed('/home');  // routing (if login success)
+      } else if (response.statusCode == 401) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("로그인 실패! 이메일 또는 비밀번호를 확인해주세요.")),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("로그인에 실패했습니다. 다시 시도해주세요.")),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
-        title: Text('SIGN IN'),
-        automaticallyImplyLeading: false,
+        // title: Text('로그인'),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(
+            backIcon,
+            color: mainThemeColor,
+          ),
           onPressed: () {
-            Navigator.pushReplacementNamed(context, '/login');
+            Navigator.of(context).pushReplacementNamed('/login');
           },
         ),
       ),
-      body: Center(
-        child: Text('empty screen for SIGNIN', style: TextStyle(fontSize: 24)),
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'lib/assets/images/splash_image.png',
+                height: 190,
+                fit: BoxFit.cover,
+              ),
+
+              SizedBox(height: 40),
+
+              Text(
+                '로그인',
+                style: TextStyle(
+                  fontSize: 24,
+                  color: mainThemeColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+
+              SizedBox(height: 20),
+
+              Divider(thickness: 1, height: 1, color: mainThemeColor),
+
+              SizedBox(height: 20),
+
+
+              // SignIn Form
+              Form(
+                key: _formKey,
+                child: Container(
+                  width: 290,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+
+                      // [field #1] email
+                      TextFormField(
+                        controller: _emailController,
+                        decoration: InputDecoration(
+                          labelText: "이메일 주소",
+                          prefixIcon: Icon(personIcon),
+                          border: OutlineInputBorder(),
+                        ),
+                        keyboardType: TextInputType.emailAddress,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "이메일을 입력해주세요.";
+                          } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                            return "올바른 이메일 주소를 입력해주세요.";
+                          }
+                          return null;
+                        },
+                      ),
+
+                      SizedBox(height: 10),
+
+                      // [field #2] password
+                      TextFormField(
+                        controller: _passwordController,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          labelText: "비밀번호",
+                          prefixIcon: Icon(lockIcon),
+                          border: OutlineInputBorder(),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "비밀번호를 입력해주세요.";
+                          }
+                          return null;
+                        },
+                      ),
+
+                      SizedBox(height: 20),
+                    ],
+                  ),
+                ),
+              ),
+
+              _isLoading
+                  ? CircularProgressIndicator()
+                  : ElevatedButton(
+                      onPressed: _submitForm,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: mainThemeColor,
+                        minimumSize: Size(240, 40),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      child: Text(
+                        '로그인',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+
+              SizedBox(height: 10),
+            ],
+          ),
+        ),
       ),
     );
   }
