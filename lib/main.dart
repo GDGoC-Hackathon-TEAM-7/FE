@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
         '/baby': (context) => NewBabyScreen(),
         '/mypage': (context) => MyPageScreen(),
         '/home': (context) => ScheduleScreen(),
+        '/babyedit': (context) => BabyEditScreen(babyId: ''),
       },
 
         localizationsDelegates: [

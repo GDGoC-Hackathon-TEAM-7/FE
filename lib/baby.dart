@@ -63,7 +63,7 @@ class _NewBabyScreenState extends State<NewBabyScreen> {
 
       // Request
       final response = await http.post(
-        Uri.parse('$serverUrl/babies'),
+        Uri.parse('$serverUrl/baby'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           "name": _babyNameController.text,
@@ -222,6 +222,240 @@ class _NewBabyScreenState extends State<NewBabyScreen> {
                       ),
                     ),
 
+              SizedBox(height: 10),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+class BabyEditScreen extends StatefulWidget {
+  final String babyId;
+
+  const BabyEditScreen({required this.babyId, super.key});
+
+  @override
+  _BabyEditScreenState createState() => _BabyEditScreenState();
+}
+
+class _BabyEditScreenState extends State<BabyEditScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _babyNameController = TextEditingController();
+  final TextEditingController _babyBirthController = TextEditingController();
+  String _selectedGender = "M"; // Default gender
+
+  bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchBabyInfo();
+  }
+
+  // fetch baby information: GET /baby/{babyId}
+  Future<void> _fetchBabyInfo() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    final response = await http.get(
+      Uri.parse('$serverUrl/baby/${widget.babyId}'),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body)['result'];
+      setState(() {
+        _babyNameController.text = data['name'];
+        _selectedGender = data['gender'];
+        _babyBirthController.text =
+            DateFormat('yyyy-MM-dd').format(DateTime.parse(data['birth']));
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("아이 정보를 가져오는데 실패했습니다.")),
+      );
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  // update baby information: PATCH /baby/{babyId}
+  Future<void> _updateBabyInfo() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      final response = await http.patch(
+        Uri.parse('$serverUrl/baby/${widget.babyId}'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          "name": _babyNameController.text,
+          "gender": _selectedGender,
+          "birth": _babyBirthController.text,
+        }),
+      );
+
+      setState(() {
+        _isLoading = false;
+      });
+
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("아이 정보가 성공적으로 수정되었습니다!")),
+        );
+        Navigator.of(context).pop();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("아이 정보 수정에 실패했습니다.")),
+        );
+      }
+    }
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    DateTime initialDate = DateTime.now();
+    DateTime firstDate = DateTime(2010, 1, 1);
+    DateTime lastDate = DateTime.now();
+
+    final pickedDate = await showDatePicker(
+      context: context,
+      initialDate: initialDate,
+      firstDate: firstDate,
+      lastDate: lastDate,
+    );
+
+    if (pickedDate != null) {
+      setState(() {
+        _babyBirthController.text = DateFormat('yyyy-MM-dd').format(pickedDate);
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      appBar: AppBar(
+        title: Text('아이 정보 수정'),
+      ),
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(height: 35),
+              Image.asset(
+                'lib/assets/images/grandfamily.png',
+                height: 140,
+                fit: BoxFit.cover,
+              ),
+              SizedBox(height: 45),
+
+              // Form
+              Form(
+                key: _formKey,
+                child: Container(
+                  width: 290,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      // [Field #1] Baby name
+                      TextFormField(
+                        controller: _babyNameController,
+                        decoration: InputDecoration(
+                          labelText: "아이 이름(별명)",
+                          prefixIcon: Icon(personIcon),
+                          border: OutlineInputBorder(),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "아이 이름을 입력해주세요.";
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 10),
+
+                      // [Field #2] Baby birth date
+                      TextFormField(
+                        controller: _babyBirthController,
+                        decoration: InputDecoration(
+                          labelText: "아이 생년월일",
+                          prefixIcon: Icon(Icons.calendar_today),
+                          border: OutlineInputBorder(),
+                        ),
+                        readOnly: true,
+                        onTap: () => _selectDate(context),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "생년월일을 선택해주세요.";
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 35),
+
+                      // [Field #3] Gender selection
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                _selectedGender = "M";
+                              });
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: _selectedGender == "M"
+                                  ? Colors.grey.shade300
+                                  : Colors.white,
+                            ),
+                            child: Text("남"),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                _selectedGender = "F";
+                              });
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: _selectedGender == "F"
+                                  ? Colors.grey.shade300
+                                  : Colors.white,
+                            ),
+                            child: Text("여"),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 35),
+                    ],
+                  ),
+                ),
+              ),
+
+              _isLoading
+                  ? CircularProgressIndicator()
+                  : ElevatedButton(
+                      onPressed: _updateBabyInfo,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: mainThemeColor,
+                        minimumSize: Size(240, 40),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      child: Text(
+                        '아이 정보 수정',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
               SizedBox(height: 10),
             ],
           ),
