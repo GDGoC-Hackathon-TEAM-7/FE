@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 
-import 'login.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'login_screen.dart';
+import 'baby_screen.dart';
+import 'mypage_screen.dart';
+import 'schedule_screen.dart';
+import 'ai.dart'; // AI 추천 화면
+import 'pediatrics.dart'; // 근처 소아과 화면
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +27,22 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginScreen(),
         '/signup': (context) => SignupScreen(),
         '/signin': (context) => SigninScreen(),
+        '/baby': (context) => NewBabyScreen(),
+        '/mypage': (context) => MyPageScreen(),
+        '/home': (context) => ScheduleScreen(),
+        '/babyedit': (context) => BabyEditScreen(babyId: ''),
+        '/ai': (context) => Aiscreen(),
+        '/pediatrics': (context) => PediatricsScreen(),
       },
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale('en', ''),
+        Locale('ko', ''),
+      ],
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
