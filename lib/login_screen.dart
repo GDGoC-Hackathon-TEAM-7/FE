@@ -29,14 +29,14 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
 
               SizedBox(height: 35),
-
+              
               ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pushReplacementNamed('/signup');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: mainThemeColor,
-                  minimumSize: Size(270, 50),
+                  // minimumSize: Size(270, 50),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
                     side: BorderSide(color: mainThemeColor, width: 1),
@@ -125,10 +125,12 @@ class _SignupScreenState extends State<SignupScreen> {
 
       // response
       if (response.statusCode == 200) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("회원가입이 완료되었습니다!")),
-        );
-        Navigator.of(context).pushReplacementNamed('/signin');
+        if(context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("회원가입이 완료되었습니다!")),
+          );
+          Navigator.of(context).pushReplacementNamed('/signin');
+        }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("회원가입에 실패했습니다. 다시 시도해주세요.")),
@@ -259,7 +261,6 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
               ),
 
-
               _isLoading
                   ? CircularProgressIndicator()
                   : ElevatedButton(
@@ -271,7 +272,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           borderRadius: BorderRadius.circular(5),
                         ),
                       ),
-                      child: Text(
+                      child: const Text(
                         '회원가입',
                         style: TextStyle(
                           color: Colors.white,
