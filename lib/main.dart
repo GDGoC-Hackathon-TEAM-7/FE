@@ -3,6 +3,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'login.dart';
 import 'baby.dart';
+import 'mypage.dart';
+import 'schedule_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,17 +15,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       title: '도담도담',
       initialRoute: '/',
-
       routes: {
         '/': (context) => SplashScreen(title: '도담도담'),
         '/login': (context) => LoginScreen(),
         '/signup': (context) => SignupScreen(),
         '/signin': (context) => SigninScreen(),
         '/baby': (context) => NewBabyScreen(),
+        '/mypage': (context) => MyPageScreen(),
+        '/home': (context) => ScheduleScreen(),
+        '/babyedit': (context) => BabyEditScreen(babyId: ''),
       },
 
         localizationsDelegates: [
@@ -44,7 +47,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
 
 class SplashScreen extends StatelessWidget {
   final String title;
