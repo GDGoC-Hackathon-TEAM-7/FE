@@ -137,7 +137,7 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         // title: Text('회원가입'),
         leading: IconButton(
@@ -157,11 +157,11 @@ class _SignupScreenState extends State<SignupScreen> {
             children: [
               Image.asset(
                 'lib/assets/images/splash_image.png',
-                height: 190,
+                height: 130,
                 fit: BoxFit.cover,
               ),
 
-              SizedBox(height: 40),
+              SizedBox(height: 25),
 
               Text(
                 '회원가입',
@@ -320,7 +320,7 @@ class _SigninScreenState extends State<SigninScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("로그인 성공!")),
         );
-        Navigator.of(context).pushReplacementNamed('/');  // routing (if login success)
+        Navigator.of(context).pushReplacementNamed('/baby');
       } else if (response.statusCode == 401) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("로그인 실패! 이메일 또는 비밀번호를 확인해주세요.")),
@@ -336,7 +336,7 @@ class _SigninScreenState extends State<SigninScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         // title: Text('로그인'),
         leading: IconButton(
@@ -352,15 +352,17 @@ class _SigninScreenState extends State<SigninScreen> {
       body: SafeArea(
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              SizedBox(height:30),
+
               Image.asset(
                 'lib/assets/images/splash_image.png',
-                height: 190,
+                height: 140,
                 fit: BoxFit.cover,
               ),
 
-              SizedBox(height: 40),
+              SizedBox(height: 20),
 
               Text(
                 '로그인',
@@ -371,11 +373,11 @@ class _SigninScreenState extends State<SigninScreen> {
                 ),
               ),
 
-              SizedBox(height: 20),
+              SizedBox(height: 30),
 
               Divider(thickness: 1, height: 1, color: mainThemeColor),
 
-              SizedBox(height: 20),
+              SizedBox(height: 30),
 
 
               // SignIn Form
@@ -425,7 +427,7 @@ class _SigninScreenState extends State<SigninScreen> {
                         },
                       ),
 
-                      SizedBox(height: 20),
+                      SizedBox(height: 30),
                     ],
                   ),
                 ),
