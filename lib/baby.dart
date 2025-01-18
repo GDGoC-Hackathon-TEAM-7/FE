@@ -94,7 +94,7 @@ class _NewBabyScreenState extends State<NewBabyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('아이 정보 입력'),
         leading: IconButton(
