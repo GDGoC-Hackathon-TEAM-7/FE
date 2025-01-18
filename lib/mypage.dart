@@ -1,177 +1,166 @@
-// import 'package:flutter/material.dart';
-// import 'dart:convert';
-// import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
 
-// import 'constants.dart';
+import 'constants.dart';
 
-// class MyPageScreen extends StatefulWidget {
-//   const MyPageScreen({super.key});
+class MyPageScreen extends StatefulWidget {
+  const MyPageScreen({super.key});
 
-//     @override
-//   _MyPageScreenState createState() => _MyPageScreenState();
-// }
+  @override
+  _MyPageScreenState createState() => _MyPageScreenState();
+}
 
-// class _MyPageScreenState extends State<MyPageScreen> {
+class _MyPageScreenState extends State<MyPageScreen> {
+  bool _isLoading = false;
 
-//   final _formKey = GlobalKey<FormState>();
-//   final TextEditingController _emailController = TextEditingController();
-//   final TextEditingController _passwordController = TextEditingController();
-//   final TextEditingController _confirmPasswordController = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Center(child: Text('마이페이지')),
+        elevation: 0,
+      ),
 
-//   bool _isLoading = false;
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
 
-//   Future<void> _submitForm() async {
-//     if (_formKey.currentState!.validate()) {
-//       setState(() {
-//         _isLoading = true;
-//       });
+            SizedBox(height:30),
 
-//       // extract information
-//       final email = _emailController.text;
-//       final emailName = email.split('@').first;
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                // SizedBox(width: 20),
 
-//       // request
-//       final response = await http.post(
-//         Uri.parse('$serverUrl/user/signup'),
-//         headers: {'Content-Type': 'application/json'},
-//         body: jsonEncode({
-//           "email": _emailController.text,
-//           "password": _passwordController.text,
-//           "nickname": emailName,
-//         }),
-//       );
+                ClipOval(
+                  child: Image.asset(
+                    'lib/assets/images/baby.png',
+                    height: 100,
+                    width: 100,
+                    fit: BoxFit.cover,
+                  ),
+                ),
 
-//       setState(() {
-//         _isLoading = false;
-//       });
+                // SizedBox(width: 15),
+                
+                Text(
+                  "김도담",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.left,
+                ),
 
-//       // response
-//       if (response.statusCode == 200) {
-//         ScaffoldMessenger.of(context).showSnackBar(
-//           SnackBar(content: Text("회원가입이 완료되었습니다!")),
-//         );
-//         Navigator.of(context).pushReplacementNamed('/signin');
-//       } else {
-//         ScaffoldMessenger.of(context).showSnackBar(
-//           SnackBar(content: Text("회원가입에 실패했습니다. 다시 시도해주세요.")),
-//         );
-//       }
-//     }
-//   }
+                // SizedBox(width: 10),
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.white,
-//       appBar: AppBar(
-//         title: Text('마이페이지'),
-//         // leading: IconButton(
-//         //   icon: Icon(
-//         //     backIcon,
-//         //     color: mainThemeColor,
-//         //   ),
-//         //   onPressed: () {
-//         //     Navigator.of(context).pushReplacementNamed('/login');
-//         //   },
-//         // ),
-//       ),
-//       body: SafeArea(
-//         child: Center(
-//           child: Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: [
+                Text(
+                  "14개월 남",
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.normal,
+                  ),
+                  textAlign: TextAlign.left,
+                ),
+              ],
+            ),
 
-//               Row(
-//                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                 children: [
-//                   Image.asset(
-//                     'lib/assets/images/baby.png',
-//                     height: 40,
-//                     fit: BoxFit.cover,
-//                   ),
+            SizedBox(height: 35),
 
-//                   ElevatedButton(
-//                     onPressed: () {
-//                       setState(() {
-//                         _selectedGender = "M";
-//                       });
-//                     },
-//                     style: ElevatedButton.styleFrom(
-//                       backgroundColor: _selectedGender == "M" ? Colors.grey.shade300 : Colors.white,
-//                     ),
-//                     child: Text("남"),
-//                   ),
-//                   ElevatedButton(
-//                     onPressed: () {
-//                       setState(() {
-//                         _selectedGender = "F";
-//                       });
-//                     },
-//                     style: ElevatedButton.styleFrom(
-//                       backgroundColor: _selectedGender == "F" ? Colors.grey.shade300 : Colors.white,
-//                     ),
-//                     child: Text("여"),
-//                   ),
-//                 ],
-//               ),
-//               // Image.asset(
-//               //   'lib/assets/images/grandfamily.png',
-//               //   height: 140,
-//               //   fit: BoxFit.cover,
-//               // ),
-//               SizedBox(height: 45),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/');
+                  },
+                  child: Text(
+                    "손자녀 정보 수정",
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white
+                    )),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: mainThemeColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(9),
+                    ),
+                  ),
+                ),
 
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/baby');
+                  },
+                  child: Text(
+                    "다른 손자녀 추가",
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white
+                    )),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 205, 174, 121),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(9),
+                    ),
+                  ),
+                ),
+              ],
+            ),
 
-//               // Register Form
-//               Form(
-//                 key: _formKey,
-//                 child: Container(
-//                   width: 290,
-//                   child: Column(
-//                     crossAxisAlignment: CrossAxisAlignment.stretch,
-//                     children: [
+            SizedBox(height: 25),
 
+            Divider(thickness: 1, color: Colors.grey.shade200),
 
-//                       SizedBox(height: 35),
-//                     ],
-//                   ),
-//                 ),
-//               ),
+            SizedBox(height: 25),
 
-//               _isLoading
-//                   ? CircularProgressIndicator()
-//                   : ElevatedButton(
-//                       onPressed: _submitForm,
-//                       style: ElevatedButton.styleFrom(
-//                         backgroundColor: mainThemeColor,
-//                         minimumSize: Size(240, 40),
-//                         shape: RoundedRectangleBorder(
-//                           borderRadius: BorderRadius.circular(5),
-//                         ),
-//                       ),
-//                       child: Text(
-//                         '아이 정보 등록',
-//                         style: TextStyle(color: Colors.white),
-//                       ),
-//                     ),
+            Column(
+              children: [
+                ElevatedButton(
+                  onPressed: () {},
+                  child: Text(
+                    "로그아웃",
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: mainThemeColor,
+                    )),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    minimumSize: Size(240, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      side: BorderSide(color: mainThemeColor, width: 1),
+                    ),
+                  ),
+                ),
 
-//               SizedBox(height: 10),
+                SizedBox(height: 10),
+                
+                ElevatedButton(
+                  onPressed: () {},
+                  child: Text(
+                    "회원 탈퇴",
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: Colors.white
+                    )),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: mainThemeColor,
+                    minimumSize: Size(240, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      side: BorderSide(color: Colors.white, width: 1),
+                    ),
+                  ),
+                ),
+              ],
+            ),
 
-  
-//               ElevatedButton(
-
-//                 child: Text("로그아웃"),
-//               ),
-
-//               ElevatedButton(
-
-//                 child: Text("회원 탈퇴"),
-//               ),
-              
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
+            SizedBox(height: 20),
+          ],
+        ),
+      ),
+    );
+  }
+}
