@@ -11,18 +11,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       title: '도담도담',
       initialRoute: '/',
-
       routes: {
         '/': (context) => SplashScreen(title: '도담도담'),
         '/login': (context) => LoginScreen(),
         '/signup': (context) => SignupScreen(),
         '/signin': (context) => SigninScreen(),
       },
-
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
@@ -30,7 +27,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
 
 class SplashScreen extends StatelessWidget {
   final String title;
