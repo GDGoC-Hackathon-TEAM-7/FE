@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'login.dart';
 import 'baby.dart';
@@ -24,6 +25,17 @@ class MyApp extends StatelessWidget {
         '/signin': (context) => SigninScreen(),
         '/baby': (context) => NewBabyScreen(),
       },
+
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+
+        supportedLocales: [
+          Locale('en', ''),
+          Locale('ko', ''),
+        ],
 
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),

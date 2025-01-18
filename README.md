@@ -17,6 +17,7 @@ GDGoC 2025 백야 해커톤 &lt;TEAM 7 - Front/Mobile&gt;
 |  LoginScreen   |  /login   | 로그인 모드 선택 |
 |  SignupScreen  |  /signup  | 회원가입 |
 |  SigninScreen  |  /signin  | 기존 사용자 로그인 |
+|  NewBabyScreen |  /baby    | 아이 정보 등록 |
 
 
 > <h3>Version Info</h3>
