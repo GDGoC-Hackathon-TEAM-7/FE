@@ -307,9 +307,9 @@ class _SigninScreenState extends State<SigninScreen> {
       final password = _passwordController.text;
 
       // request
-      final response = await http.get(
-        Uri.parse('$serverUrl/user/signin?email=$email&password=$password'),
-      );
+      final response = await http.post(
+        Uri.parse('$serverUrl/user/login?email=$email&password=$password'),
+      );  
 
       setState(() {
         _isLoading = false;
@@ -320,7 +320,7 @@ class _SigninScreenState extends State<SigninScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("로그인 성공!")),
         );
-        Navigator.of(context).pushReplacementNamed('/home');  // routing (if login success)
+        Navigator.of(context).pushReplacementNamed('/');  // routing (if login success)
       } else if (response.statusCode == 401) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("로그인 실패! 이메일 또는 비밀번호를 확인해주세요.")),
