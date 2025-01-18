@@ -211,14 +211,17 @@ class _NewBabyScreenState extends State<NewBabyScreen> {
                       onPressed: _submitForm,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: mainThemeColor,
-                        minimumSize: Size(240, 40),
+                        minimumSize: Size(220, 45),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5),
                         ),
                       ),
                       child: Text(
                         '아이 정보 등록',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                        ),
                       ),
                     ),
 
