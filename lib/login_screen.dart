@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+// import 'package:shared_preferences/shared_preferences.dart';
 
 import 'constants.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
-  @override
+    @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -23,36 +25,42 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               Image.asset(
                 'lib/assets/images/splash_image.png',
-                height: 190,
+                height: 200,
                 fit: BoxFit.cover,
               ),
+
               SizedBox(height: 35),
+              
               ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pushReplacementNamed('/signup');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: mainThemeColor,
-                  minimumSize: Size(240, 40),
+                  // minimumSize: Size(270, 50),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
+                    side: BorderSide(color: mainThemeColor, width: 1),
                   ),
                 ),
                 child: Text(
                   '가입하기 (신규 사용자)',
                   style: TextStyle(
                     color: Colors.white,
+                    fontSize: 25,
                   ),
                 ),
               ),
-              SizedBox(height: 10),
+
+              SizedBox(height: 18),
+
               ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pushReplacementNamed('/signin');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
-                  minimumSize: Size(240, 40),
+                  minimumSize: Size(282, 50),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
                     side: BorderSide(color: mainThemeColor, width: 1),
@@ -62,6 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   '로그인 (기존 사용자)',
                   style: TextStyle(
                     color: mainThemeColor,
+                    fontSize: 25,
                   ),
                 ),
               ),
@@ -76,16 +85,16 @@ class _LoginScreenState extends State<LoginScreen> {
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
 
-  @override
+    @override
   _SignupScreenState createState() => _SignupScreenState();
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
 
   bool _isLoading = false;
 
@@ -116,10 +125,12 @@ class _SignupScreenState extends State<SignupScreen> {
 
       // response
       if (response.statusCode == 200) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("회원가입이 완료되었습니다!")),
-        );
-        Navigator.of(context).pushReplacementNamed('/signin');
+        if(context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("회원가입이 완료되었습니다!")),
+          );
+          Navigator.of(context).pushReplacementNamed('/signin');
+        }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("회원가입에 실패했습니다. 다시 시도해주세요.")),
@@ -147,30 +158,33 @@ class _SignupScreenState extends State<SignupScreen> {
       body: SafeArea(
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              SizedBox(height: 25),
+
               Image.asset(
                 'lib/assets/images/splash_image.png',
                 height: 130,
                 fit: BoxFit.cover,
               ),
 
-              SizedBox(height: 25),
+              SizedBox(height: 22),
 
               Text(
                 '회원가입',
                 style: TextStyle(
-                  fontSize: 24,
-                  color: mainThemeColor,
+                  fontSize: 25,
+                  color: const Color.fromARGB(255, 176, 148, 99),
                   fontWeight: FontWeight.bold,
                 ),
               ),
 
-              SizedBox(height: 20),
+              SizedBox(height: 22),
 
               Divider(thickness: 1, height: 1, color: mainThemeColor),
 
               SizedBox(height: 20),
+
 
               // SignUp Form
               Form(
@@ -180,6 +194,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
+
                       // [field #1] email
                       TextFormField(
                         controller: _emailController,
@@ -192,8 +207,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return "이메일을 입력해주세요.";
-                          } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
-                              .hasMatch(value)) {
+                          } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
                             return "올바른 이메일 주소를 입력해주세요.";
                           }
                           return null;
@@ -214,14 +228,13 @@ class _SignupScreenState extends State<SignupScreen> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return "비밀번호를 입력해주세요.";
-                          } else if (value.length != 4 ||
-                              !RegExp(r'^\d{4}$').hasMatch(value)) {
+                          } else if (value.length != 4 || !RegExp(r'^\d{4}$').hasMatch(value)) {
                             return "숫자 4자리를 입력해주세요.";
                           }
                           return null;
                         },
                       ),
-
+                      
                       SizedBox(height: 10),
 
                       // [field #3] password confirmation
@@ -242,7 +255,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           return null;
                         },
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 25),
                     ],
                   ),
                 ),
@@ -254,14 +267,17 @@ class _SignupScreenState extends State<SignupScreen> {
                       onPressed: _submitForm,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: mainThemeColor,
-                        minimumSize: Size(240, 40),
+                        minimumSize: Size(220, 50),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5),
                         ),
                       ),
-                      child: Text(
+                      child: const Text(
                         '회원가입',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                        ),
                       ),
                     ),
 
@@ -273,6 +289,7 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 }
+
 
 class SigninScreen extends StatefulWidget {
   const SigninScreen({super.key});
@@ -299,9 +316,9 @@ class _SigninScreenState extends State<SigninScreen> {
       final password = _passwordController.text;
 
       // request
-      final response = await http.post(
+      final response = await http.get(
         Uri.parse('$serverUrl/user/login?email=$email&password=$password'),
-      );
+      );  
 
       setState(() {
         _isLoading = false;
@@ -346,7 +363,7 @@ class _SigninScreenState extends State<SigninScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(height: 30),
+              SizedBox(height:30),
 
               Image.asset(
                 'lib/assets/images/splash_image.png',
@@ -359,8 +376,8 @@ class _SigninScreenState extends State<SigninScreen> {
               Text(
                 '로그인',
                 style: TextStyle(
-                  fontSize: 24,
-                  color: mainThemeColor,
+                  fontSize: 25,
+                  color: const Color.fromARGB(255, 176, 148, 99),
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -371,6 +388,7 @@ class _SigninScreenState extends State<SigninScreen> {
 
               SizedBox(height: 30),
 
+
               // SignIn Form
               Form(
                 key: _formKey,
@@ -379,6 +397,7 @@ class _SigninScreenState extends State<SigninScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
+
                       // [field #1] email
                       TextFormField(
                         controller: _emailController,
@@ -391,8 +410,7 @@ class _SigninScreenState extends State<SigninScreen> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return "이메일을 입력해주세요.";
-                          } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
-                              .hasMatch(value)) {
+                          } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
                             return "올바른 이메일 주소를 입력해주세요.";
                           }
                           return null;
@@ -430,14 +448,17 @@ class _SigninScreenState extends State<SigninScreen> {
                       onPressed: _submitForm,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: mainThemeColor,
-                        minimumSize: Size(240, 40),
+                        minimumSize: Size(220, 50),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5),
                         ),
                       ),
                       child: Text(
                         '로그인',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                        ),
                       ),
                     ),
 

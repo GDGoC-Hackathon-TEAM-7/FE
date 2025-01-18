@@ -1,5 +1,6 @@
 plugins {
-    id "com.android.application" version "8.2.1" // 최신 버전으로 수정
+    id "com.android.application"
+    //  version "8.2.1" // 최신 버전으로 수정
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
 }
