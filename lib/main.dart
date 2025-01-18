@@ -3,6 +3,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'login.dart';
 import 'baby.dart';
+import 'mypage.dart';
+import 'schedule_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,6 +26,8 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => SignupScreen(),
         '/signin': (context) => SigninScreen(),
         '/baby': (context) => NewBabyScreen(),
+        '/mypage': (context) => MyPageScreen(),
+        '/home': (context) => ScheduleScreen(),
       },
 
         localizationsDelegates: [
