@@ -67,7 +67,7 @@ class _NewBabyScreenState extends State<NewBabyScreen> {
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           "name": _babyNameController.text,
-          "birthDate": _babyBirthController.text.isNotEmpty ? DateFormat('yyyy-MM-dd').format(DateTime.parse(_babyBirthController.text)) : null,
+          "birthDate": _babyBirthController.text,
           "gender": _selectedGender,
         }),
       );
@@ -110,8 +110,11 @@ class _NewBabyScreenState extends State<NewBabyScreen> {
       body: SafeArea(
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+
+
             children: [
+              SizedBox(height: 35),
               Image.asset(
                 'lib/assets/images/grandfamily.png',
                 height: 140,
