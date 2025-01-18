@@ -81,7 +81,7 @@ class _NewBabyScreenState extends State<NewBabyScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("아이 정보가 등록되었습니다!")),
         );
-        Navigator.of(context).pushReplacementNamed('/');
+        Navigator.of(context).pushReplacementNamed('/home');
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("정보 등록에 실패했습니다. 다시 시도해주세요.")),
