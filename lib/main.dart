@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'login.dart';
-import 'baby.dart';
-import 'mypage.dart';
+import 'login_screen.dart';
+import 'baby_screen.dart';
+import 'mypage_screen.dart';
 import 'schedule_screen.dart';
 
 void main() {

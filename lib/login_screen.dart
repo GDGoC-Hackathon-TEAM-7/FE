@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+// import 'package:shared_preferences/shared_preferences.dart';
 
 import 'constants.dart';
 
@@ -80,7 +81,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
-
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -316,7 +316,7 @@ class _SigninScreenState extends State<SigninScreen> {
       final password = _passwordController.text;
 
       // request
-      final response = await http.post(
+      final response = await http.get(
         Uri.parse('$serverUrl/user/login?email=$email&password=$password'),
       );  
 

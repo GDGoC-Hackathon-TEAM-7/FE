@@ -2,17 +2,48 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
+// import 'package:shared_preferences/shared_preferences.dart';
 
 import 'constants.dart';
+
 
 class NewBabyScreen extends StatefulWidget {
   const NewBabyScreen({super.key});
 
-    @override
+  @override
   _NewBabyScreenState createState() => _NewBabyScreenState();
 }
 
 class _NewBabyScreenState extends State<NewBabyScreen> {
+  late String savedEmail;
+
+  @override
+  void initState() {
+    super.initState();
+    _createDiary();
+  }
+
+    Future<void> _createDiary() async {
+    const String date = "2025-01-29";
+    const String memo = "string";
+
+    final response = await http.post(
+      Uri.parse('$serverUrl/diary'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        "babyId": firstBaby,
+        "date": date,
+        "memo": memo,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      print('Diary record saved successfully');
+    } else {
+      print('Failed to save diary record');
+    }
+  }
+
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _babyNameController = TextEditingController();
   final TextEditingController _babyBirthController = TextEditingController();
@@ -59,7 +90,7 @@ class _NewBabyScreenState extends State<NewBabyScreen> {
       setState(() {
         _isLoading = true;
       });
-
+    
 
       // Request
       final response = await http.post(
@@ -67,8 +98,9 @@ class _NewBabyScreenState extends State<NewBabyScreen> {
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           "name": _babyNameController.text,
-          "birthDate": _babyBirthController.text,
+          "birth": _babyBirthController.text,
           "gender": _selectedGender,
+          "email": userEmail,
         }),
       );
 
