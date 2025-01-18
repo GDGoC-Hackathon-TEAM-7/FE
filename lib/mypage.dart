@@ -10,7 +10,6 @@ class MyPageScreen extends StatefulWidget {
 }
 
 class _MyPageScreenState extends State<MyPageScreen> {
-  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
