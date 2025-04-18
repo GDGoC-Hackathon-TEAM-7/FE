@@ -1,5 +1,45 @@
-# DodamDodam - FE
-GDGoC 2025 백야 해커톤 &lt;TEAM 7 [LuckyVicky] - Front/Mobile&gt;
+# 🍼 DodamDodam - FE(Mobile)
+
+<div align="center">
+  <img src="https://drive.google.com/uc?id=1vO6SbpdIuhg4owiToclEXfIwf5-y5UxH" alt="dodamdodam" width="70%" />
+</div>
+
+
+```
+📌 A mobile application to help grandparents manage childcare activities and access support tools
+```
+* Google Developer Groups on Campus Korea, Inter-Chapter Hackathon **`Baekya`**
+
+
+<br>
+
+## 💡 Key Features
+
+#### ✅ Log baby's meals, diaper changes, and sleep/wake times
+#### ✅ Share daily childcare diary with family members
+#### ✅ Resolve childcare questions through the AI chatbot  
+#### ✅ Find for nearby pediatric clinics using Google Maps
+
+<br>
+
+## ☘️ Team 7 `LuckyVicky`
+
+
+| Name       | Role     | GitHub                                               |
+|------------|----------|------------------------------------------------------|
+| 김민        | Mobile   | [kmin1231](https://github.com/kmin1231) |
+| 송하은      | Backend  | [haeunsong](https://github.com/haeunsong) |
+| 이호연      | Backend  | [howooyeon](https://github.com/howooyeon) |
+| 장민주      | Mobile   | [Minju-3](https://github.com/Minju-3) |
+| 황지영      | Backend  | [hwangjiyoung02](https://github.com/hwangjiyoung02) |
+
+<br>
+
+---
+
+<br>
+
+## 📱Frontend Development
 
 > <h3>Flutter Project Info</h3>
 |  Project Name  |  dodam  |
@@ -9,16 +49,23 @@ GDGoC 2025 백야 해커톤 &lt;TEAM 7 [LuckyVicky] - Front/Mobile&gt;
 |  Android Language  |  Java  |
 |  Platforms  |  Android / iOS / Web / Windows  |
 
+<br>
 
-> <h3>Screen</h3>
-|      name      |  routing  |    detail    |
-|----------------|-----------|--------------|
-|  SplashScreen  |  /        | app 스플래시 화면 |
-|  LoginScreen   |  /login   | 로그인 모드 선택 |
-|  SignupScreen  |  /signup  | 회원가입 |
-|  SigninScreen  |  /signin  | 기존 사용자 로그인 |
-|  NewBabyScreen |  /baby    | 아이 정보 등록 |
+> <h3>Screen Info</h3>
+|      name         |  routing       |    detail                 |
+|-------------------|----------------|---------------------------|
+|  SplashScreen     |  `/`           | application splash screen |
+|  LoginScreen      |  `/login`      | choose: sign-up or sign-in |
+|  SignupScreen     |  `/signup`     | sign-up |
+|  SigninScreen     |  `/signin`     | sign-in |
+|  NewBabyScreen    |  `/baby`       | register baby information |
+|  BabyEditScreen   |  `/babyedit`   | edit baby information |
+|  MyPageScreen     |  `/mypage`     | manage profile and baby information |
+|  PediatricsScreen |  `/pediatrics` | find nearby pediatric clinics |
+|  ScheduleScreen   |  `/home`       | record baby's daily activities |
+|  Aiscreen         |  `/ai`         | chat with AI assistant |
 
+<br>
 
 > <h3>Version Info</h3>
 ```
@@ -33,15 +80,4 @@ Tools • Dart 3.5.2 • DevTools 2.37.2
 ```
 
 
-> <h3>flutter project - Getting Started</h3>
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
